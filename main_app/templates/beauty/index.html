@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Beauty Brand List</h1>
+
+{% for beauty in beauty %}
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ beauty.name }}</span>
+    <p>Country: {{ beauty.country }}</p>
+    <p>Description: {{ beauty.description }}</p>
+    <p>Founded Since: {{ beauty.founded }}</p>
+  </div>
+</div>
+{% endfor %} {% endblock %}
