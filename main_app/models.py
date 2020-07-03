@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+CATEGORY = (('S', 'Skincare'), ('M', 'Makeup'), ('A', 'Accessory'))
+
 
 # Create your models here.
 class Brand(models.Model):
@@ -17,10 +19,12 @@ class Brand(models.Model):
 
 
 class Purchase(models.Model):
-    date = models.DateField()
-    item = models.CharField(max_length=100)
+    date = models.DateField('purchase date')
+    item = models.CharField(max_length=1,
+                            choices=CATEGORY,
+                            default=CATEGORY[0][0])
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.item} on {self.date}"
+        return f"{self.get_item_display()} on {self.date}"
