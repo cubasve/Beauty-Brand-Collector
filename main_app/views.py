@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
 from .models import Brand
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 def home(request):
@@ -24,3 +24,13 @@ def brands_detail(request, brand_id):
 class BrandCreate(CreateView):
     model = Brand
     fields = '__all__'
+
+
+class BrandUpdate(UpdateView):
+    model = Brand
+    fields = ['country', 'description', 'founded']
+
+
+class BrandDelete(DeleteView):
+    model = Brand
+    success_url = '/brands/'

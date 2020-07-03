@@ -7,4 +7,10 @@ urlpatterns = [
     path('brands/', views.brands_index, name='index'),
     path('brands/<int:brand_id>/', views.brands_detail, name='detail'),
     path('brands/create/', views.BrandCreate.as_view(), name='brands_create'),
+    path('brands/<int:pk>/update/',
+         views.BrandUpdate.as_view(),
+         name='brands_update'),
+    path('brands/<int:pk>/delete/',
+         views.BrandDelete.as_view(),
+         name='brands_delete'),
 ]
