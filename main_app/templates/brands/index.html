@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Beauty Brand List</h1>
+
+{% for brand in brands %}
+<a href="/brands/{{ brand.id}}">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ brand.name }}</span>
+      <p>Country: {{ brand.country }}</p>
+      <p>Description: {{ brand.description }}</p>
+      <p>Founded Since: {{ brand.founded }}</p>
+    </div>
+  </div>
+</a>
+{% endfor %}
+{% endblock %}
