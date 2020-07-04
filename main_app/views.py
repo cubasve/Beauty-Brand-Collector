@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Brand
 from .forms import PurchaseForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -39,3 +39,12 @@ class BrandUpdate(UpdateView):
 class BrandDelete(DeleteView):
     model = Brand
     success_url = '/brands/'
+
+
+def add_purchase(request, brand_id):
+    form = PurchaseForm(request.POST)
+    if form.is_valid():
+        new_purchase = form.save(commit=False)
+        new_purchase.brand_id = brand_id
+        new_purchase.save()
+    return redirect('detail', brand_id=brand_id)

@@ -20,7 +20,7 @@
     </div>
 
     <div class="col s6">
-        <form method="post">
+        <form action="{% url 'add_purchase' brand.id %}" method="post">
             {% csrf_token %}
             {{ purchase_form.as_p }}
             <input type="submit" class="btn" value="Add Purchase">
@@ -47,7 +47,7 @@
 <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {
-        format: 'yyy-mm-dd',
+        format: 'yyyy-mm-dd',
         defaultDate: new Date(),
         setDefaultDate: true,
         autoClose: true,
