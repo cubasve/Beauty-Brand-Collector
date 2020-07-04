@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
+from django.contrib.auth.models import User
 
 CATEGORIES = (('S', 'Skincare'), ('M', 'Makeup'), ('A', 'Accessory'))
 
@@ -20,6 +22,7 @@ class Brand(models.Model):
     description = models.TextField(max_length=250)
     founded = models.IntegerField()
     products = models.ManyToManyField(Product)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
