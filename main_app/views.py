@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Brand
-from .forms import PurchaseForm
+# from .forms import PurchaseForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
@@ -19,9 +19,9 @@ def brands_index(request):
 
 def brands_detail(request, brand_id):
     brand = Brand.objects.get(id=brand_id)
-    purchase_form = PurchaseForm()
-    return render(request, 'brands/detail.html', {'brand': brand},
-                  {'purchase_form': purchase_form})
+    # purchase_form = PurchaseForm()
+    return render(request, 'brands/detail.html', {'brand': brand})
+    #   {'purchase_form': purchase_form})
 
 
 class BrandCreate(CreateView):

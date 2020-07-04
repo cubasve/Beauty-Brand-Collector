@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="col s6">
+    <!-- <div class="col s6">
         <form method="post">
             {% csrf_token %}
             {{ purchase_form.as_p }}
@@ -37,14 +37,14 @@
                 {% for purchase in cat.purchase_set.all %}
                 <tr>
                     <td>{{ purchase.date }}</td>
-                    <td>{{ purchase.item }}</td>
+                    <td>{{ purchase.category }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-</div>
-<script>
+</div> -->
+    <!-- <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {
         format: 'yyy-mm-dd',
@@ -52,5 +52,5 @@
         setDefaultDate: true,
         autoClose: true,
     });
-</script>
-{% endblock %}
+</script> -->
+    {% endblock %}
