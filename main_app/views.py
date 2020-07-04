@@ -21,10 +21,14 @@ def brands_index(request):
 def brands_detail(request, brand_id):
     brand = Brand.objects.get(id=brand_id)
     purchase_form = PurchaseForm()
-    return render(request, 'brands/detail.html', {
-        'brand': brand,
-        'purchase_form': purchase_form
-    })
+    products_brand_doesnt_have = Product.objects.exclude(
+        id__in=brand.products.all().values_list('id'))
+    return render(
+        request, 'brands/detail.html', {
+            'brand': brand,
+            'purchase_form': purchase_form,
+            'products': products_brand_doesnt_have,
+        })
 
 
 class BrandCreate(CreateView):

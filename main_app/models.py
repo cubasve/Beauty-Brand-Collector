@@ -8,7 +8,7 @@ class Product(models.Model):
     type = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return self.type
 
     def get_absolute_url(self):
         return reverse('products_detail', kwargs={'pk': self.id})
@@ -19,6 +19,7 @@ class Brand(models.Model):
     country = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     founded = models.IntegerField()
+    products = models.ManyToManyField(Product)
 
     def __str__(self):
         return self.name
