@@ -3,6 +3,8 @@ from .models import Brand, Product
 from .forms import PurchaseForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 
 
 def home(request):
@@ -34,6 +36,10 @@ def brands_detail(request, brand_id):
 class BrandCreate(CreateView):
     model = Brand
     fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class BrandUpdate(UpdateView):
@@ -81,3 +87,18 @@ class ProductDelete(DeleteView):
 def assoc_product(request, brand_id, product_id):
     Brand.objects.get(id=brand_id).products.add(product_id)
     return redirect('detail', brand_id=brand_id)
+
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            error_message = 'Invalid sign up - Try again'
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)

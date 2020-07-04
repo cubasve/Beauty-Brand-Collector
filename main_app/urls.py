@@ -19,4 +19,5 @@ urlpatterns = [
     path('brands/<int:brand_id>/assoc_product/<int:product_id>/',
          views.assoc_product,
          name='assoc_product'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]
