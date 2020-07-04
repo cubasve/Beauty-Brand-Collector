@@ -5,6 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def home(request):
@@ -15,11 +17,13 @@ def about(request):
     return render(request, 'about.html')
 
 
+@login_required
 def brands_index(request):
-    brands = Brand.objects.all()
+    brands = Brand.objects.filter(user=request.user)
     return render(request, 'brands/index.html', {'brands': brands})
 
 
+@login_required
 def brands_detail(request, brand_id):
     brand = Brand.objects.get(id=brand_id)
     purchase_form = PurchaseForm()
@@ -33,7 +37,7 @@ def brands_detail(request, brand_id):
         })
 
 
-class BrandCreate(CreateView):
+class BrandCreate(LoginRequiredMixin, CreateView):
     model = Brand
     fields = '__all__'
 
@@ -42,16 +46,17 @@ class BrandCreate(CreateView):
         return super().form_valid(form)
 
 
-class BrandUpdate(UpdateView):
+class BrandUpdate(LoginRequiredMixin, UpdateView):
     model = Brand
     fields = ['country', 'description', 'founded']
 
 
-class BrandDelete(DeleteView):
+class BrandDelete(LoginRequiredMixin, DeleteView):
     model = Brand
     success_url = '/brands/'
 
 
+@login_required
 def add_purchase(request, brand_id):
     form = PurchaseForm(request.POST)
     if form.is_valid():
@@ -61,29 +66,30 @@ def add_purchase(request, brand_id):
     return redirect('detail', brand_id=brand_id)
 
 
-class ProductList(ListView):
+class ProductList(LoginRequiredMixin, ListView):
     model = Product
 
 
-class ProductDetail(DetailView):
+class ProductDetail(LoginRequiredMixin, DetailView):
     model = Product
 
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     fields = '__all__'
 
 
-class ProductUpdate(UpdateView):
+class ProductUpdate(LoginRequiredMixin, UpdateView):
     model = Product
     fields = ['name']
 
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = '/products/'
 
 
+@login_required
 def assoc_product(request, brand_id, product_id):
     Brand.objects.get(id=brand_id).products.add(product_id)
     return redirect('detail', brand_id=brand_id)
