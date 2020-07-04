@@ -76,3 +76,8 @@ class ProductUpdate(UpdateView):
 class ProductDelete(DeleteView):
     model = Product
     success_url = '/products/'
+
+
+def assoc_product(request, brand_id, product_id):
+    Brand.objects.get(id=brand_id).products.add(product_id)
+    return redirect('detail', brand_id=brand_id)

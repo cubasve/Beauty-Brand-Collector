@@ -16,4 +16,7 @@ urlpatterns = [
     path('brands/<int:brand_id>/add_purchase',
          views.add_purchase,
          name='add_purchase'),
+    path('brands/<int:brand_id>/assoc_product/<int:product_id>/',
+         views.assoc_product,
+         name='assoc_product'),
 ]

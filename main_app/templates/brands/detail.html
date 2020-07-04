@@ -51,32 +51,38 @@
         {% if brand.products.count %}
         {% for product in brand.products.all %}
         <div class="card">
-            <div class="card-content">{{ product.type }}</div>
+            <div class="card-content">
+                <span class="card-title">{{ product.type }}</span>
+            </div>
         </div>
         {% endfor %}
         {% else %}
         <h5>No Products Yet</h5>
         {% endif %}
     </div>
-</div>
-<div class="col s6">
-    <h3>Available Products</h3>
-    {% if products.count %}
-    {% for product in products.all %}
-    <div class="card">
-        <div class="card-content"> {{ product.type }}</div>
+    <div class="col s6">
+        <h3>Available Products</h3>
+        {% if products.count %}
+        {% for product in products.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ product.type }}</span>
+            </div>
+
+            <div class="card-action">
+                <form action="{% url 'assoc_product' brand.id product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Add</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5>{{ brand.name }} Already Has All Products Available</h5>
+        {% endif %}
     </div>
-    <div class="card-action">
-        <form action="" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn">Add</button>
-        </form>
-    </div>
-    {% endfor %}
-    {% else %}
-    <h5>{{ brand.name }} Already Has All Products Available</h5>
-    {% endif %}
 </div>
+
 <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {
