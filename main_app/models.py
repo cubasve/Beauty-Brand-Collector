@@ -4,7 +4,16 @@ from django.urls import reverse
 CATEGORIES = (('S', 'Skincare'), ('M', 'Makeup'), ('A', 'Accessory'))
 
 
-# Create your models here.
+class Product(models.Model):
+    type = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('products_detail', kwargs={'pk': self.id})
+
+
 class Brand(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
